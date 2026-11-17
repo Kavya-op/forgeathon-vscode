@@ -1,0 +1,17 @@
+# Ignore model keys and local configurations
+agent/models.json
+.env
+*.env.local
+
+# Cloned test repository
+flask-real/
+
+# Node and editor dependencies
+node_modules/
+.vscode-test/
+dist/
+
+# Python cache
+__pycache__/
+*.pyc
+.pytest_cache/
