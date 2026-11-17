@@ -1,0 +1,63 @@
+{
+  "name": "trueforge-coding-agent",
+  "version": "1.0.0",
+  "description": "Editor-native autonomous coding agent running on TrueForge harness for VS Code.",
+  "model": {
+    "provider": "openai-compatible",
+    "model_name": "gemini-2.5-flash",
+    "base_url": "${TRUEFORGE_MODEL_BASE_URL:-https://generativelanguage.googleapis.com/v1beta/openai/}",
+    "api_key": "${TRUEFORGE_MODEL_API_KEY}",
+    "temperature": 0.1,
+    "max_tokens": 8192
+  },
+  "resilience": {
+    "enabled": true,
+    "max_retries": 2,
+    "retry_backoff_ms": 1000,
+    "fallback_models": [
+      {
+        "provider": "openai-compatible",
+        "model_name": "gpt-4o-mini",
+        "base_url": "${TRUEFORGE_FALLBACK_BASE_URL:-https://api.openai.com/v1}",
+        "api_key": "${TRUEFORGE_FALLBACK_API_KEY}",
+        "temperature": 0.1
+      },
+      {
+        "provider": "ollama",
+        "model_name": "qwen2.5-coder:7b",
+        "base_url": "http://localhost:11434/v1",
+        "temperature": 0.1
+      }
+    ]
+  },
+  "context_engineering": {
+    "compaction": {
+      "enabled": true,
+      "trigger_token_threshold": 24000,
+      "target_token_budget": 16000,
+      "strategy": "structured_summary"
+    },
+    "deferred_tool_loading": true,
+    "budget": {
+      "max_context_files": 12,
+      "max_file_tokens": 4000,
+      "max_total_retrieval_tokens": 16000
+    }
+  },
+  "mcp_servers": [
+    {
+      "name": "vscode-editor",
+      "transport": "stdio",
+      "command": "node",
+      "args": ["${WORKSPACE_ROOT}/mcp-server/dist/index.js"]
+    }
+  ],
+  "tool_policies": {
+    "read_file": { "approval": "auto" },
+    "search_workspace": { "approval": "auto" },
+    "get_symbol_definitions": { "approval": "auto" },
+    "propose_diff": { "approval": "always_ask" },
+    "run_terminal_command": { "approval": "always_ask" }
+  },
+  "system_prompt_file": "./prompts/system.md"
+}

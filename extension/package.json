@@ -1,0 +1,95 @@
+{
+  "name": "trueforge-vscode",
+  "displayName": "TrueForge Coding Agent",
+  "description": "Editor-native autonomous coding agent running on the TrueForge harness.",
+  "version": "1.0.0",
+  "publisher": "trueforge-team",
+  "engines": {
+    "vscode": "^1.90.0"
+  },
+  "categories": ["Programming Languages", "Machine Learning"],
+  "main": "./dist/extension.js",
+  "contributes": {
+    "commands": [
+      {
+        "command": "trueforge.inlineEdit",
+        "title": "TrueForge: Inline Edit",
+        "category": "TrueForge"
+      },
+      {
+        "command": "trueforge.openAgentPanel",
+        "title": "TrueForge: Open Agent Panel",
+        "category": "TrueForge"
+      },
+      {
+        "command": "trueforge.cancelExecution",
+        "title": "TrueForge: Cancel Generation",
+        "category": "TrueForge"
+      },
+      {
+        "command": "trueforge.undoLastDiff",
+        "title": "TrueForge: Undo Last Diff",
+        "category": "TrueForge"
+      }
+    ],
+    "keybindings": [
+      {
+        "command": "trueforge.inlineEdit",
+        "key": "ctrl+k",
+        "mac": "cmd+k",
+        "when": "editorTextFocus"
+      },
+      {
+        "command": "trueforge.cancelExecution",
+        "key": "escape",
+        "when": "trueforge.isGenerating"
+      }
+    ],
+    "viewsContainers": {
+      "activitybar": [
+        {
+          "id": "trueforge-view-container",
+          "title": "TrueForge Agent",
+          "icon": "resources/icon.svg"
+        }
+      ]
+    },
+    "views": {
+      "trueforge-view-container": [
+        {
+          "type": "webview",
+          "id": "trueforge.agentPanel",
+          "name": "Agent Mode"
+        }
+      ]
+    },
+    "configuration": {
+      "title": "TrueForge",
+      "properties": {
+        "trueforge.apiUrl": {
+          "type": "string",
+          "default": "http://127.0.0.1:4000",
+          "description": "Base URL of the local TrueForge daemon instance."
+        },
+        "trueforge.agentId": {
+          "type": "string",
+          "default": "trueforge-coding-agent",
+          "description": "Agent configuration ID in TrueForge."
+        },
+        "trueforge.autoFallback": {
+          "type": "boolean",
+          "default": true,
+          "description": "Automatically failover to secondary model if primary endpoint errors."
+        }
+      }
+    }
+  },
+  "scripts": {
+    "build": "node esbuild.config.js",
+    "watch": "node esbuild.config.js --watch"
+  },
+  "devDependencies": {
+    "@types/node": "^22.10.0",
+    "@types/vscode": "^1.90.0"
+  }
+}

@@ -1,0 +1,23 @@
+{
+  "comment": "Copy this file to models.json and set your real API keys. Never commit models.json to git.",
+  "primary": {
+    "provider": "openai-compatible",
+    "model_name": "gemini-2.5-flash",
+    "base_url": "https://generativelanguage.googleapis.com/v1beta/openai/",
+    "api_key": "YOUR_GEMINI_API_KEY_HERE"
+  },
+  "fallbacks": [
+    {
+      "provider": "openai-compatible",
+      "model_name": "gpt-4o-mini",
+      "base_url": "https://api.openai.com/v1",
+      "api_key": "YOUR_OPENAI_API_KEY_HERE"
+    },
+    {
+      "provider": "ollama",
+      "model_name": "qwen2.5-coder:7b",
+      "base_url": "http://localhost:11434/v1",
+      "api_key": "not-required"
+    }
+  ]
+}
