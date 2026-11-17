@@ -6,7 +6,7 @@ import { AgentPanelProvider } from "./panel/agentPanelProvider";
 
 export function activate(context: vscode.ExtensionContext) {
   const config = vscode.workspace.getConfiguration("trueforge");
-  const apiUrl = config.get<string>("apiUrl", "http://127.0.0.1:4000");
+  const apiUrl = config.get<string>("apiUrl", "http://localhost:8790");
   const agentId = config.get<string>("agentId", "trueforge-coding-agent");
 
   // Core subsystems

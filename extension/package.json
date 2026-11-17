@@ -68,7 +68,7 @@
       "properties": {
         "trueforge.apiUrl": {
           "type": "string",
-          "default": "http://127.0.0.1:4000",
+          "default": "http://localhost:8790",
           "description": "Base URL of the local TrueForge daemon instance."
         },
         "trueforge.agentId": {

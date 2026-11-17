@@ -25,7 +25,7 @@ export class TrueforgeClient {
   private agentId: string;
   private activeAbortController: AbortController | null = null;
 
-  constructor(baseUrl: string = "http://127.0.0.1:4000", agentId: string = "trueforge-coding-agent") {
+  constructor(baseUrl: string = "http://localhost:8790", agentId: string = "trueforge-coding-agent") {
     this.baseUrl = baseUrl.replace(/\/$/, "");
     this.agentId = agentId;
   }

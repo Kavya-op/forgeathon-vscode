@@ -11,7 +11,7 @@ const { URL } = require("url");
 // 1. TrueForge Bridge Client
 // ==========================================
 class TrueforgeClient {
-  constructor(baseUrl = "http://127.0.0.1:4000", agentId = "trueforge-coding-agent") {
+  constructor(baseUrl = "http://localhost:8790", agentId = "trueforge-coding-agent") {
     this.baseUrl = baseUrl.replace(/\/$/, "");
     this.agentId = agentId;
   }
@@ -847,7 +847,7 @@ function activate(context) {
   } catch {}
 
   const config = vscode.workspace.getConfiguration("trueforge");
-  const apiUrl = config.get("apiUrl", "http://127.0.0.1:4000");
+  const apiUrl = config.get("apiUrl", "http://localhost:8790");
   const agentId = config.get("agentId", "trueforge-coding-agent");
 
   const client = new TrueforgeClient(apiUrl, agentId);

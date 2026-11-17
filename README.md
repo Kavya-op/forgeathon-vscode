@@ -62,7 +62,7 @@ Start TrueForge on your machine:
 ```bash
 npx @truefoundry/trueforge@latest --agent-config ./agent/agent.json
 ```
-TrueForge runs locally on `http://127.0.0.1:4000`.
+TrueForge runs locally on `http://localhost:8790`.
 
 ### 4. Run Extension in VS Code
 1. Open this repository in VS Code: `code .`
