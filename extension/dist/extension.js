@@ -831,6 +831,21 @@ window.onmessage = (e) => {
 // 5. Extension Activation & Exports
 // ==========================================
 function activate(context) {
+  // Automatically load agent/models.json if present
+  try {
+    const workspaceFolders = vscode.workspace.workspaceFolders;
+    if (workspaceFolders && workspaceFolders.length > 0) {
+      const root = workspaceFolders[0].uri.fsPath;
+      const modelsPath = path.join(root, "agent", "models.json");
+      if (fs.existsSync(modelsPath)) {
+        const models = JSON.parse(fs.readFileSync(modelsPath, "utf-8"));
+        if (models.primary?.api_key) {
+          process.env.TRUEFORGE_MODEL_API_KEY = models.primary.api_key;
+        }
+      }
+    }
+  } catch {}
+
   const config = vscode.workspace.getConfiguration("trueforge");
   const apiUrl = config.get("apiUrl", "http://127.0.0.1:4000");
   const agentId = config.get("agentId", "trueforge-coding-agent");
