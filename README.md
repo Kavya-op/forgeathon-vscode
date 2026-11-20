@@ -62,6 +62,7 @@ Start TrueForge on your machine:
 ```bash
 npx @truefoundry/trueforge@latest --agent-config ./agent/agent.json
 ```
+*(On Windows, you can also simply double-click `start_harness.bat`).*
 TrueForge runs locally on `http://localhost:8790`.
 
 ### 4. Run Extension in VS Code

@@ -9,6 +9,9 @@
         "${workspaceFolder}/flask-real",
         "--extensionDevelopmentPath=${workspaceFolder}/extension"
       ],
+      "env": {
+        "Path": "C:\\Python315;C:\\Python315\\Scripts;${env:Path}"
+      },
       "outFiles": [
         "${workspaceFolder}/extension/dist/**/*.js"
       ]

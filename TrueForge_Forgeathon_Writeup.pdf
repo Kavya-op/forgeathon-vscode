@@ -1,0 +1,199 @@
+%PDF-1.4
+1 0 obj
+<< /Type /Catalog /Pages 2 0 R >>
+endobj
+2 0 obj
+<< /Type /Pages /Kids [3 0 R 4 0 R 5 0 R] /Count 3 >>
+endobj
+3 0 obj
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 595.28 841.89] /Contents 6 0 R /Resources << /Font << /F1 9 0 R /F2 10 0 R /F3 11 0 R >> >> >>
+endobj
+4 0 obj
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 595.28 841.89] /Contents 7 0 R /Resources << /Font << /F1 9 0 R /F2 10 0 R /F3 11 0 R >> >> >>
+endobj
+5 0 obj
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 595.28 841.89] /Contents 8 0 R /Resources << /Font << /F1 9 0 R /F2 10 0 R /F3 11 0 R >> >> >>
+endobj
+6 0 obj
+<< /Length 6324 >>
+stream
+BT /F2 15.0 Tf 0.08 0.45 0.82 rg 1 0 0 1 44.00 795.89 Tm (TRUEFORGE CODING AGENT) Tj ET
+BT /F1 9.0 Tf 0.40 0.44 0.48 rg 1 0 0 1 44.00 780.89 Tm (System Architecture & Engineering Report | Techfest 2026-27 TrueFoundry Forge-a-thon) Tj ET
+1.50 w 0.08 0.45 0.82 RG 44.00 772.89 m 551.28 772.89 l S
+BT /F2 11.5 Tf 0.10 0.14 0.18 rg 1 0 0 1 44.00 748.89 Tm (1. Team) Tj ET
+0.60 w 0.84 0.87 0.90 RG 44.00 742.89 m 551.28 742.89 l S
+0.75 w 0.84 0.87 0.91 RG 0.97 0.98 0.99 rg 44.00 682.89 247.64 58.00 re B
+BT /F2 9.8 Tf 0.10 0.14 0.18 rg 1 0 0 1 52.00 726.89 Tm (Kavya Joshi) Tj ET
+BT /F2 8.2 Tf 0.08 0.45 0.82 rg 1 0 0 1 52.00 714.89 Tm (Lead Architecture & Extension Host) Tj ET
+BT /F1 8.0 Tf 0.35 0.38 0.42 rg 1 0 0 1 52.00 702.89 Tm (College / Institution: [Your College]) Tj ET
+BT /F1 7.8 Tf 0.45 0.48 0.52 rg 1 0 0 1 52.00 691.89 Tm (GitHub: github.com/KavyaJoshi | kavya@example.com) Tj ET
+0.75 w 0.84 0.87 0.91 RG 0.97 0.98 0.99 rg 303.64 682.89 247.64 58.00 re B
+BT /F2 9.8 Tf 0.10 0.14 0.18 rg 1 0 0 1 311.64 726.89 Tm (Team Member 2) Tj ET
+BT /F2 8.2 Tf 0.08 0.45 0.82 rg 1 0 0 1 311.64 714.89 Tm (MCP Protocol & Tool Server Engineering) Tj ET
+BT /F1 8.0 Tf 0.35 0.38 0.42 rg 1 0 0 1 311.64 702.89 Tm (College / Institution: [Institution Name]) Tj ET
+BT /F1 7.8 Tf 0.45 0.48 0.52 rg 1 0 0 1 311.64 691.89 Tm (GitHub: @member2 | member2@example.com) Tj ET
+0.75 w 0.84 0.87 0.91 RG 0.97 0.98 0.99 rg 44.00 616.89 247.64 58.00 re B
+BT /F2 9.8 Tf 0.10 0.14 0.18 rg 1 0 0 1 52.00 660.89 Tm (Team Member 3) Tj ET
+BT /F2 8.2 Tf 0.08 0.45 0.82 rg 1 0 0 1 52.00 648.89 Tm (Context Assembly & Budgeted Retrieval) Tj ET
+BT /F1 8.0 Tf 0.35 0.38 0.42 rg 1 0 0 1 52.00 636.89 Tm (College / Institution: [Institution Name]) Tj ET
+BT /F1 7.8 Tf 0.45 0.48 0.52 rg 1 0 0 1 52.00 625.89 Tm (GitHub: @member3 | member3@example.com) Tj ET
+0.75 w 0.84 0.87 0.91 RG 0.97 0.98 0.99 rg 303.64 616.89 247.64 58.00 re B
+BT /F2 9.8 Tf 0.10 0.14 0.18 rg 1 0 0 1 311.64 660.89 Tm (Team Member 4) Tj ET
+BT /F2 8.2 Tf 0.08 0.45 0.82 rg 1 0 0 1 311.64 648.89 Tm (Diff Safety, Pytest & Resilience Testing) Tj ET
+BT /F1 8.0 Tf 0.35 0.38 0.42 rg 1 0 0 1 311.64 636.89 Tm (College / Institution: [Institution Name]) Tj ET
+BT /F1 7.8 Tf 0.45 0.48 0.52 rg 1 0 0 1 311.64 625.89 Tm (GitHub: @member4 | member4@example.com) Tj ET
+BT /F2 11.5 Tf 0.10 0.14 0.18 rg 1 0 0 1 44.00 584.89 Tm (2. Starting point) Tj ET
+0.60 w 0.84 0.87 0.90 RG 44.00 578.89 m 551.28 578.89 l S
+BT /F1 9.8 Tf 0.18 0.20 0.22 rg 1 0 0 1 44.00 564.89 Tm (Built strictly from scratch using a clean, modular editor-native architecture) Tj ET
+BT /F1 9.8 Tf 0.18 0.20 0.22 rg 1 0 0 1 44.00 549.89 Tm (conforming to the official Model Context Protocol \(MCP\) 2024-11-05 specification and) Tj ET
+BT /F1 9.8 Tf 0.18 0.20 0.22 rg 1 0 0 1 44.00 534.89 Tm (the Visual Studio Code Extension API. Zero proprietary agent-loop retention was used;) Tj ET
+BT /F1 9.8 Tf 0.18 0.20 0.22 rg 1 0 0 1 44.00 519.89 Tm (the extension strictly delegates all agent orchestration, multi-turn tool loops, and) Tj ET
+BT /F1 9.8 Tf 0.18 0.20 0.22 rg 1 0 0 1 44.00 504.89 Tm (model interactions to TrueForge \(github.com/truefoundry/trueforge\) running locally on) Tj ET
+BT /F1 9.8 Tf 0.18 0.20 0.22 rg 1 0 0 1 44.00 489.89 Tm (port 8790.) Tj ET
+BT /F1 9.8 Tf 0.18 0.20 0.22 rg 1 0 0 1 44.00 469.89 Tm (By building from scratch rather than wrapping existing tools, the extension guarantees) Tj ET
+BT /F1 9.8 Tf 0.18 0.20 0.22 rg 1 0 0 1 44.00 454.89 Tm (that every capability \(in-editor hunk diffing, context budgeting, streaming tokens,) Tj ET
+BT /F1 9.8 Tf 0.18 0.20 0.22 rg 1 0 0 1 44.00 439.89 Tm (and immediate cancellation\) is native to VS Code and strictly governed by the) Tj ET
+BT /F1 9.8 Tf 0.18 0.20 0.22 rg 1 0 0 1 44.00 424.89 Tm (TrueForge harness.) Tj ET
+BT /F2 11.5 Tf 0.10 0.14 0.18 rg 1 0 0 1 44.00 398.89 Tm (3. Architecture on TrueForge) Tj ET
+0.60 w 0.84 0.87 0.90 RG 44.00 392.89 m 551.28 392.89 l S
+BT /F1 9.8 Tf 0.18 0.20 0.22 rg 1 0 0 1 44.00 378.89 Tm (The architecture enforces a strict decoupled boundary between editor presentation and) Tj ET
+BT /F1 9.8 Tf 0.18 0.20 0.22 rg 1 0 0 1 44.00 363.89 Tm (autonomous agent execution, divided into three robust subsystems:) Tj ET
+BT /F1 9.6 Tf 0.20 0.22 0.24 rg 1 0 0 1 44.00 343.89 Tm (- Client Communication & Streaming: The VS Code extension connects to TrueForge via) Tj ET
+BT /F1 9.6 Tf 0.20 0.22 0.24 rg 1 0 0 1 56.00 329.39 Tm (HTTP and SSE streaming \(/api/v1/sessions and /api/v1/sessions/:id/turns\). Tokens) Tj ET
+BT /F1 9.6 Tf 0.20 0.22 0.24 rg 1 0 0 1 56.00 314.89 Tm (stream directly into the active webview panel. An AbortController signal binds to) Tj ET
+BT /F1 9.6 Tf 0.20 0.22 0.24 rg 1 0 0 1 56.00 300.39 Tm (Escape and Cancel buttons, halting generation mid-flight without dirtying the) Tj ET
+BT /F1 9.6 Tf 0.20 0.22 0.24 rg 1 0 0 1 56.00 285.89 Tm (repository.) Tj ET
+BT /F1 9.6 Tf 0.20 0.22 0.24 rg 1 0 0 1 44.00 267.39 Tm (- Editor Capabilities Exposed as MCP Tools: The extension hosts an in-process) Tj ET
+BT /F1 9.6 Tf 0.20 0.22 0.24 rg 1 0 0 1 56.00 252.89 Tm (JSON-RPC 2.0 stdio MCP server exposing 6 tools: read_file \(range-budgeted slicing\),) Tj ET
+BT /F1 9.6 Tf 0.20 0.22 0.24 rg 1 0 0 1 56.00 238.39 Tm (search_workspace \(filtered regex search\), get_symbol_definitions \(AST symbol) Tj ET
+BT /F1 9.6 Tf 0.20 0.22 0.24 rg 1 0 0 1 56.00 223.89 Tm (extraction\), propose_diff \(unified diff generation\), run_terminal_command \(isolated) Tj ET
+BT /F1 9.6 Tf 0.20 0.22 0.24 rg 1 0 0 1 56.00 209.39 Tm (shell execution\), and assemble_context \(scored file relevance ranking\).) Tj ET
+BT /F1 9.6 Tf 0.20 0.22 0.24 rg 1 0 0 1 44.00 190.89 Tm (- TrueForge Harness Features Utilized: Diff proposals enforce 'approval: always_ask') Tj ET
+BT /F1 9.6 Tf 0.20 0.22 0.24 rg 1 0 0 1 56.00 176.39 Tm (so the user explicitly reviews hunks before any write touches disk. Structured) Tj ET
+BT /F1 9.6 Tf 0.20 0.22 0.24 rg 1 0 0 1 56.00 161.89 Tm (summary context compaction triggers at 24k tokens to preserve budget, and) Tj ET
+BT /F1 9.6 Tf 0.20 0.22 0.24 rg 1 0 0 1 56.00 147.39 Tm (multi-model resilience automatically fails over if endpoints fail.) Tj ET
+BT /F1 8.5 Tf 0.45 0.48 0.52 rg 1 0 0 1 44.00 24.00 Tm (Techfest 2026-27 TrueFoundry Forge-a-thon | Technical Report) Tj 1 0 0 1 496.28 24.00 Tm (Page 1 of 3) Tj ET
+
+endstream
+endobj
+7 0 obj
+<< /Length 5400 >>
+stream
+BT /F2 15.0 Tf 0.08 0.45 0.82 rg 1 0 0 1 44.00 795.89 Tm (TRUEFORGE CODING AGENT) Tj ET
+BT /F1 9.0 Tf 0.40 0.44 0.48 rg 1 0 0 1 44.00 780.89 Tm (System Architecture & Engineering Report | Techfest 2026-27 TrueFoundry Forge-a-thon) Tj ET
+1.50 w 0.08 0.45 0.82 RG 44.00 772.89 m 551.28 772.89 l S
+BT /F2 11.5 Tf 0.10 0.14 0.18 rg 1 0 0 1 44.00 748.89 Tm (4. How context is selected) Tj ET
+0.60 w 0.84 0.87 0.90 RG 44.00 742.89 m 551.28 742.89 l S
+BT /F1 9.8 Tf 0.18 0.20 0.22 rg 1 0 0 1 44.00 728.89 Tm (Operating on large codebases \(such as pallets/flask at ~17,000 lines\) requires) Tj ET
+BT /F1 9.8 Tf 0.18 0.20 0.22 rg 1 0 0 1 44.00 713.89 Tm (budgeted, multi-stage retrieval rather than dumping raw repositories into context:) Tj ET
+BT /F1 9.6 Tf 0.20 0.22 0.24 rg 1 0 0 1 44.00 693.89 Tm (- Explicit Mentions First: Tokens with @file and @symbol references are resolved) Tj ET
+BT /F1 9.6 Tf 0.20 0.22 0.24 rg 1 0 0 1 56.00 679.39 Tm (first and granted top context priority, bypassing fuzzy search.) Tj ET
+BT /F1 9.6 Tf 0.20 0.22 0.24 rg 1 0 0 1 44.00 660.89 Tm (- Size Budget Constraints: Enforces strict capacity bounds: maximum 12 context) Tj ET
+BT /F1 9.6 Tf 0.20 0.22 0.24 rg 1 0 0 1 56.00 646.39 Tm (files; maximum 4,000 tokens per file; maximum aggregate retrieval budget capped at) Tj ET
+BT /F1 9.6 Tf 0.20 0.22 0.24 rg 1 0 0 1 56.00 631.89 Tm (16,000 tokens to ensure the prompt remains well within LLM attention thresholds.) Tj ET
+BT /F1 9.6 Tf 0.20 0.22 0.24 rg 1 0 0 1 44.00 613.39 Tm (- Task Role Heuristics: Keyword analysis categorizes candidate files across) Tj ET
+BT /F1 9.6 Tf 0.20 0.22 0.24 rg 1 0 0 1 56.00 598.89 Tm (functional roles: CLI registry \(src/flask/cli.py\), test validation) Tj ET
+BT /F1 9.6 Tf 0.20 0.22 0.24 rg 1 0 0 1 56.00 584.39 Tm (\(tests/test_cli.py\), and documentation reference \(docs/cli.rst\).) Tj ET
+BT /F1 9.6 Tf 0.20 0.22 0.24 rg 1 0 0 1 44.00 565.89 Tm (- Rationale Logging: For every selected file, the agent outputs an explicit) Tj ET
+BT /F1 9.6 Tf 0.20 0.22 0.24 rg 1 0 0 1 56.00 551.39 Tm (selection rationale in the sidebar during Task B \(e.g., 'src/flask/cli.py -> Primary) Tj ET
+BT /F1 9.6 Tf 0.20 0.22 0.24 rg 1 0 0 1 56.00 536.89 Tm (CLI registry where built-in click commands are defined'\).) Tj ET
+BT /F2 11.5 Tf 0.10 0.14 0.18 rg 1 0 0 1 44.00 512.39 Tm (5. Model setup) Tj ET
+0.60 w 0.84 0.87 0.90 RG 44.00 506.39 m 551.28 506.39 l S
+BT /F1 9.8 Tf 0.18 0.20 0.22 rg 1 0 0 1 44.00 492.39 Tm (TrueForge abstracts model providers via an OpenAI-compatible interface, enabling) Tj ET
+BT /F1 9.8 Tf 0.18 0.20 0.22 rg 1 0 0 1 44.00 477.39 Tm (transparent routing across cloud and local engines:) Tj ET
+BT /F1 9.6 Tf 0.20 0.22 0.24 rg 1 0 0 1 44.00 457.39 Tm (- Primary Model: Gemini 2.5 Flash / Claude 3.5 Sonnet \(OpenAI-compatible endpoint) Tj ET
+BT /F1 9.6 Tf 0.20 0.22 0.24 rg 1 0 0 1 56.00 442.89 Tm (via TrueForge gateway\). Hosted API; total execution cost < $0.05 for all development) Tj ET
+BT /F1 9.6 Tf 0.20 0.22 0.24 rg 1 0 0 1 56.00 428.39 Tm (and test runs.) Tj ET
+BT /F1 9.6 Tf 0.20 0.22 0.24 rg 1 0 0 1 44.00 409.89 Tm (- Secondary Fallback Model: Gemini 1.5 Flash / GPT-4o-mini \(OpenAI-compatible\) and) Tj ET
+BT /F1 9.6 Tf 0.20 0.22 0.24 rg 1 0 0 1 56.00 395.39 Tm (local Ollama \(qwen2.5-coder:7b\). Serves as immediate zero-downtime failover.) Tj ET
+BT /F1 9.6 Tf 0.20 0.22 0.24 rg 1 0 0 1 44.00 376.89 Tm (- Model Switching: Managed centrally in agent/models.json or TrueForge harness) Tj ET
+BT /F1 9.6 Tf 0.20 0.22 0.24 rg 1 0 0 1 56.00 362.39 Tm (settings with zero extension recompilation required. Failover occurs automatically) Tj ET
+BT /F1 9.6 Tf 0.20 0.22 0.24 rg 1 0 0 1 56.00 347.89 Tm (upon connection timeouts or HTTP errors.) Tj ET
+BT /F2 11.5 Tf 0.10 0.14 0.18 rg 1 0 0 1 44.00 323.39 Tm (6. Tools used) Tj ET
+0.60 w 0.84 0.87 0.90 RG 44.00 317.39 m 551.28 317.39 l S
+BT /F1 9.8 Tf 0.18 0.20 0.22 rg 1 0 0 1 44.00 303.39 Tm (The project relies strictly on approved open protocols and standard developer) Tj ET
+BT /F1 9.8 Tf 0.18 0.20 0.22 rg 1 0 0 1 44.00 288.39 Tm (environments:) Tj ET
+BT /F1 9.6 Tf 0.20 0.22 0.24 rg 1 0 0 1 44.00 268.39 Tm (- Agent Orchestration Harness: TrueForge \(@truefoundry/trueforge\) running in local) Tj ET
+BT /F1 9.6 Tf 0.20 0.22 0.24 rg 1 0 0 1 56.00 253.89 Tm (mode on localhost:8790, managing the multi-turn session lifecycle.) Tj ET
+BT /F1 9.6 Tf 0.20 0.22 0.24 rg 1 0 0 1 44.00 235.39 Tm (- Editor Protocol: Model Context Protocol \(MCP\) JSON-RPC 2.0 stdio server connecting) Tj ET
+BT /F1 9.6 Tf 0.20 0.22 0.24 rg 1 0 0 1 56.00 220.89 Tm (VS Code capabilities to TrueForge tools.) Tj ET
+BT /F1 9.6 Tf 0.20 0.22 0.24 rg 1 0 0 1 44.00 202.39 Tm (- Editor Platform: Visual Studio Code Extension API \(v1.90.0+\), leveraging Webview) Tj ET
+BT /F1 9.6 Tf 0.20 0.22 0.24 rg 1 0 0 1 56.00 187.89 Tm (panels, text decorations, and workspace events.) Tj ET
+BT /F1 9.6 Tf 0.20 0.22 0.24 rg 1 0 0 1 44.00 169.39 Tm (- AI Coding Assistants: LLM coding assistant used for project scaffolding,) Tj ET
+BT /F1 9.6 Tf 0.20 0.22 0.24 rg 1 0 0 1 56.00 154.89 Tm (TypeScript typing, and unit test verification \(declared per rule 4; costs no) Tj ET
+BT /F1 9.6 Tf 0.20 0.22 0.24 rg 1 0 0 1 56.00 140.39 Tm (points\).) Tj ET
+BT /F1 8.5 Tf 0.45 0.48 0.52 rg 1 0 0 1 44.00 24.00 Tm (Techfest 2026-27 TrueFoundry Forge-a-thon | Technical Report) Tj 1 0 0 1 496.28 24.00 Tm (Page 2 of 3) Tj ET
+
+endstream
+endobj
+8 0 obj
+<< /Length 4905 >>
+stream
+BT /F2 15.0 Tf 0.08 0.45 0.82 rg 1 0 0 1 44.00 795.89 Tm (TRUEFORGE CODING AGENT) Tj ET
+BT /F1 9.0 Tf 0.40 0.44 0.48 rg 1 0 0 1 44.00 780.89 Tm (System Architecture & Engineering Report | Techfest 2026-27 TrueFoundry Forge-a-thon) Tj ET
+1.50 w 0.08 0.45 0.82 RG 44.00 772.89 m 551.28 772.89 l S
+BT /F2 11.5 Tf 0.10 0.14 0.18 rg 1 0 0 1 44.00 748.89 Tm (7. Known limitations and what you would do with another month) Tj ET
+0.60 w 0.84 0.87 0.90 RG 44.00 742.89 m 551.28 742.89 l S
+BT /F1 9.8 Tf 0.18 0.20 0.22 rg 1 0 0 1 44.00 728.89 Tm (To ensure transparency and rigorous engineering reflection, we highlight our current) Tj ET
+BT /F1 9.8 Tf 0.18 0.20 0.22 rg 1 0 0 1 44.00 713.89 Tm (trade-offs and our detailed roadmap for production readiness:) Tj ET
+BT /F1 9.6 Tf 0.20 0.22 0.24 rg 1 0 0 1 44.00 693.89 Tm (- Current Limitation 1: Heuristic Symbol Search: Semantic symbol lookup currently) Tj ET
+BT /F1 9.6 Tf 0.20 0.22 0.24 rg 1 0 0 1 56.00 679.39 Tm (relies on regex AST heuristics and keyword scoring rather than an incremental vector) Tj ET
+BT /F1 9.6 Tf 0.20 0.22 0.24 rg 1 0 0 1 56.00 664.89 Tm (embedding index. While this avoids heavy embedding runtime dependencies, it can miss) Tj ET
+BT /F1 9.6 Tf 0.20 0.22 0.24 rg 1 0 0 1 56.00 650.39 Tm (deeply indirect cross-file references in highly dynamic Python codebases.) Tj ET
+BT /F1 9.6 Tf 0.20 0.22 0.24 rg 1 0 0 1 44.00 631.89 Tm (- Current Limitation 2: Sequential Multi-File Diff Presentation: Multi-file diffs in) Tj ET
+BT /F1 9.6 Tf 0.20 0.22 0.24 rg 1 0 0 1 56.00 617.39 Tm (Task B are presented sequentially per file rather than in an integrated multi-tab) Tj ET
+BT /F1 9.6 Tf 0.20 0.22 0.24 rg 1 0 0 1 56.00 602.89 Tm (split grid. While safer for hunk-by-hunk review, reviewing 10+ files simultaneously) Tj ET
+BT /F1 9.6 Tf 0.20 0.22 0.24 rg 1 0 0 1 56.00 588.39 Tm (in a larger enterprise refactoring task would benefit from an aggregated workspace) Tj ET
+BT /F1 9.6 Tf 0.20 0.22 0.24 rg 1 0 0 1 56.00 573.89 Tm (review panel.) Tj ET
+BT /F1 9.6 Tf 0.20 0.22 0.24 rg 1 0 0 1 44.00 555.39 Tm (- Current Limitation 3: Synchronous Stdio MCP Lifecycle: The MCP server runs as a) Tj ET
+BT /F1 9.6 Tf 0.20 0.22 0.24 rg 1 0 0 1 56.00 540.89 Tm (child stdio process of TrueForge. If the local TrueForge process restarts) Tj ET
+BT /F1 9.6 Tf 0.20 0.22 0.24 rg 1 0 0 1 56.00 526.39 Tm (unexpectedly, the stdio pipe must be re-negotiated, requiring a session) Tj ET
+BT /F1 9.6 Tf 0.20 0.22 0.24 rg 1 0 0 1 56.00 511.89 Tm (re-handshake.) Tj ET
+BT /F1 9.6 Tf 0.20 0.22 0.24 rg 1 0 0 1 44.00 493.39 Tm (- Future Roadmap 1: Tree-sitter Semantic Graph Engine: With another month, we would) Tj ET
+BT /F1 9.6 Tf 0.20 0.22 0.24 rg 1 0 0 1 56.00 478.89 Tm (integrate Tree-sitter WASM directly into the MCP server. This would enable exact) Tj ET
+BT /F1 9.6 Tf 0.20 0.22 0.24 rg 1 0 0 1 56.00 464.39 Tm (language-agnostic AST parsing, call-graph traversal, and accurate reference counting) Tj ET
+BT /F1 9.6 Tf 0.20 0.22 0.24 rg 1 0 0 1 56.00 449.89 Tm (across Python, TypeScript, and Go repositories without language servers.) Tj ET
+BT /F1 9.6 Tf 0.20 0.22 0.24 rg 1 0 0 1 44.00 431.39 Tm (- Future Roadmap 2: Native Daytona Container MicroVM Sandboxing: We would leverage) Tj ET
+BT /F1 9.6 Tf 0.20 0.22 0.24 rg 1 0 0 1 56.00 416.89 Tm (TrueForge's native Daytona sandbox integration to run code execution, linting, and) Tj ET
+BT /F1 9.6 Tf 0.20 0.22 0.24 rg 1 0 0 1 56.00 402.39 Tm (pytest suites in isolated disposable microVMs. This guarantees zero chance of) Tj ET
+BT /F1 9.6 Tf 0.20 0.22 0.24 rg 1 0 0 1 56.00 387.89 Tm (malicious or breaking terminal commands touching the host developer environment.) Tj ET
+BT /F1 9.6 Tf 0.20 0.22 0.24 rg 1 0 0 1 44.00 369.39 Tm (- Future Roadmap 3: Concurrent Three-Way Merge & Conflict Resolution: We would) Tj ET
+BT /F1 9.6 Tf 0.20 0.22 0.24 rg 1 0 0 1 56.00 354.89 Tm (implement a full three-way merge resolution algorithm for multi-hunk edits, allowing) Tj ET
+BT /F1 9.6 Tf 0.20 0.22 0.24 rg 1 0 0 1 56.00 340.39 Tm (multiple subagents to propose concurrent changes to adjacent functions without) Tj ET
+BT /F1 9.6 Tf 0.20 0.22 0.24 rg 1 0 0 1 56.00 325.89 Tm (stepping on each other's line offsets.) Tj ET
+BT /F1 9.6 Tf 0.20 0.22 0.24 rg 1 0 0 1 44.00 307.39 Tm (- Future Roadmap 4: Local Embedding Cache via Ollama: We would bundle a local) Tj ET
+BT /F1 9.6 Tf 0.20 0.22 0.24 rg 1 0 0 1 56.00 292.89 Tm (embedding sidecar \(such as bge-small or nomic-embed-text via Ollama\) to pre-index) Tj ET
+BT /F1 9.6 Tf 0.20 0.22 0.24 rg 1 0 0 1 56.00 278.39 Tm (workspace files offline, providing sub-millisecond semantic search without sending) Tj ET
+BT /F1 9.6 Tf 0.20 0.22 0.24 rg 1 0 0 1 56.00 263.89 Tm (file contents to external cloud APIs.) Tj ET
+BT /F1 8.5 Tf 0.45 0.48 0.52 rg 1 0 0 1 44.00 24.00 Tm (Techfest 2026-27 TrueFoundry Forge-a-thon | Technical Report) Tj 1 0 0 1 496.28 24.00 Tm (Page 3 of 3) Tj ET
+
+endstream
+endobj
+9 0 obj
+<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica /Encoding /WinAnsiEncoding >>
+endobj
+10 0 obj
+<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica-Bold /Encoding /WinAnsiEncoding >>
+endobj
+11 0 obj
+<< /Type /Font /Subtype /Type1 /BaseFont /Courier /Encoding /WinAnsiEncoding >>
+endobj
+xref
+0 12
+0000000000 65535 f 
+0000000009 00000 n 
+0000000058 00000 n 
+0000000127 00000 n 
+0000000281 00000 n 
+0000000435 00000 n 
+0000000589 00000 n 
+0000006965 00000 n 
+0000012417 00000 n 
+0000017374 00000 n 
+0000017471 00000 n 
+0000017574 00000 n 
+trailer
+<< /Size 12 /Root 1 0 R >>
+startxref
+17670
+%%EOF

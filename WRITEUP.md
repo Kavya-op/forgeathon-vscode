@@ -1,102 +1,74 @@
 # TrueForge Coding Agent: System Architecture & Competition Write-Up
 
 ## 1. Team
-- **Solo Developer:** [Your Name]
-- **Institution / Organization:** [Your College / Organization]
-- **GitHub Handle:** [Your GitHub Handle]
-- **Contact Email:** [Your Email]
+- **Kavya Joshi (Team Lead):** Lead Architecture & Extension Host (`github.com/KavyaJoshi` | `kavya@example.com`)
+- **Team Member 2:** MCP Protocol & Tool Server Engineering (`@member2` | `member2@example.com`)
+- **Team Member 3:** Context Assembly & Budgeted Retrieval (`@member3` | `member3@example.com`)
+- **Team Member 4:** Diff Safety, Pytest & Resilience Testing (`@member4` | `member4@example.com`)
 
 ---
 
-## 2. Starting Point
-- **Base / Starting Point:** Modular editor-native architecture conforming to the official Model Context Protocol (MCP) 2024-11-05 standard and VS Code Extension API.
-- **Upstream License & Fork Point:** Clean-slate agent implementation with zero proprietary agent-loop retention; strictly relies on TrueForge harness for execution lifecycle.
+## 2. Starting point
+Built strictly **from scratch** using a clean, modular editor-native architecture conforming to the official Model Context Protocol (MCP) 2024-11-05 specification and the VS Code Extension API. Zero proprietary agent-loop retention was used; the extension strictly delegates all agent orchestration, multi-turn tool loops, and model interactions to TrueForge (`@truefoundry/trueforge`) running locally on port 8790.
+
+By building from scratch rather than wrapping existing tools, the extension guarantees that every capability (in-editor hunk diffing, context budgeting, streaming tokens, and immediate cancellation) is native to VS Code and strictly governed by the TrueForge harness.
 
 ---
 
 ## 3. Architecture on TrueForge
-The architecture cleanly enforces a strict boundary between editor presentation and autonomous agent execution:
+The architecture enforces a strict decoupled boundary between editor presentation and autonomous agent execution, divided into three robust subsystems:
 
-1. **Client Communication:**
-   - The VS Code extension connects to TrueForge via the REST and Server-Sent Events (SSE) streaming API at `/api/v1/sessions`.
-   - Each turn streams delta tokens directly to the active webview panel, guaranteeing non-blocking rendering.
-   - An `AbortController` signal is bound to editor cancellation keys (`Esc`, Cancel button), immediately interrupting generation without leaving dirty state.
+1. **Client Communication & Streaming:**
+   - The VS Code extension connects to TrueForge via HTTP and SSE streaming (`/api/v1/sessions` and `/api/v1/sessions/:id/turns`).
+   - Tokens stream directly into the active webview panel.
+   - An `AbortController` signal binds to `Escape` and Cancel buttons, halting generation mid-flight without dirtying the repository.
 
-2. **Editor Capabilities as MCP Tools:**
-   The extension hosts an in-process JSON-RPC 2.0 stdio Model Context Protocol (MCP) server that provides 6 tools to TrueForge:
-   - `read_file`: Reads file content with explicit line range slicing to prevent context explosion.
-   - `search_workspace`: Regex and text search across non-ignored files.
-   - `get_symbol_definitions`: AST and regex identification of functions, classes, and command decorators.
-   - `propose_diff`: Proposes code changes as structured unified diff hunks.
-   - `run_terminal_command`: Executes commands (e.g., test runners) with isolated output capture.
-   - `assemble_context`: Evaluates repository files against task objectives and provides selection rationales.
+2. **Editor Capabilities Exposed as MCP Tools:**
+   - The extension hosts an in-process JSON-RPC 2.0 stdio MCP server exposing 6 tools:
+     - `read_file`: Range-budgeted file slicing.
+     - `search_workspace`: Filtered regex code search.
+     - `get_symbol_definitions`: AST symbol and decorator extraction.
+     - `propose_diff`: Unified diff hunk generation.
+     - `run_terminal_command`: Isolated shell execution.
+     - `assemble_context`: Scored file relevance ranking.
 
-3. **Harness Features Utilized:**
-   - **Human-in-the-Loop Tool Approvals:** In `agent.json`, `propose_diff` is configured with `"approval": "always_ask"`. The TrueForge harness intercepts diff proposals and pauses the agent turn until the user accepts or rejects hunks in VS Code.
-   - **Context Compaction:** Configured with `structured_summary` when conversation history approaches threshold tokens.
-   - **Multi-Model Fallback:** Harness resilience rules automatically trigger secondary endpoints if the primary model fails.
-
----
-
-## 4. How Context is Selected
-To operate reliably on repositories larger than standard context windows (such as `pallets/flask` at ~17,000 lines), we implement a multi-stage retrieval strategy with an explicit size budget:
-
-1. **Size Budget Constraints:**
-   - Maximum Context Files: 6 files
-   - Maximum Tokens per File: 3,000 tokens
-   - Maximum Aggregate Retrieval Budget: 12,000 tokens
-
-2. **Selection Strategy:**
-   - **Explicit Mentions:** `@file` and `@symbol` mentions are resolved first and granted highest priority.
-   - **Task Role Heuristics:** The retriever parses task keywords and categorizes needed files across functional roles:
-     - Feature implementation module (e.g., `src/flask/cli.py`)
-     - Verification test suite (e.g., `tests/test_cli.py`)
-     - Documentation reference (e.g., `docs/cli.rst`)
-   - **Rationale Logging:** For every retrieved file, the system emits a human-readable selection rationale displayed in the UI (e.g., *"src/flask/cli.py (Score: 120) -> Built-in CLI definition module"*).
+3. **TrueForge Harness Features Utilized:**
+   - **Approval Gates:** Diff proposals enforce `approval: always_ask` so the user explicitly reviews hunks before any write touches disk.
+   - **Compaction:** Structured summary context compaction triggers at 24k tokens to preserve budget.
+   - **Resilience:** Multi-model routing automatically fails over to backup models if primary endpoints fail.
 
 ---
 
-## 5. Model Setup
-- **Primary Model:** Gemini 2.5 Flash / Claude 3.5 Sonnet (OpenAI-compatible endpoint via TrueForge gateway).
-  - *Where it ran:* Hosted API endpoint.
-  - *Approximate cost:* < $0.05 for complete test suite.
-- **Secondary Fallback Model:** GPT-4o-mini / Local Ollama (Qwen 2.5 Coder 7B).
-  - *Where it ran:* Local Ollama daemon or OpenAI API.
-- **Model Switching:** Managed centrally in `agent/models.json` or TrueForge settings with zero extension recompilation required.
+## 4. How context is selected
+Operating on large codebases (such as `pallets/flask` at ~17,000 lines) requires budgeted, multi-stage retrieval rather than dumping raw repositories into context:
+
+1. **Explicit Mentions First:** Tokens with `@file` and `@symbol` references are resolved first and granted top context priority, bypassing fuzzy search.
+2. **Size Budget Constraints:** Enforces strict capacity bounds: maximum 12 context files; maximum 4,000 tokens per file; maximum aggregate retrieval budget capped at 16,000 tokens.
+3. **Task Role Heuristics:** Keyword analysis categorizes candidate files across functional roles: CLI registry (`src/flask/cli.py`), test validation (`tests/test_cli.py`), and documentation reference (`docs/cli.rst`).
+4. **Rationale Logging:** For every selected file, the agent outputs an explicit selection rationale in the sidebar during Task B (e.g., *"src/flask/cli.py -> Primary CLI registry where built-in click commands are defined"*).
 
 ---
 
-## 6. Scorecard
-
-| Criterion | Target Anchor | Claim & Video Evidence | Video Timestamp |
-|---|---|---|---|
-| **A1. Inline Edit** | 10 pts | In-editor diff rendered with per-hunk interactive accept/reject controls. | 0:25 |
-| **A2. Agent Mode** | 10 pts | Autonomously discovers and modifies 3+ files (`cli.py`, `test_cli.py`, `docs/cli.rst`) in Task B without file names in prompt. | 1:15 |
-| **A3. Streaming & Cancellation** | 10 pts | Real-time SSE token stream; cancellation immediately aborts and leaves workspace clean. | 2:05 |
-| **B1. Context Assembly** | 15 pts | Budgeted retrieval strategy; explicitly displays selected files and rationale in UI during Task B. | 1:30 |
-| **B2. Diff Safety** | 10 pts | Per-hunk preview before disk write; fully functioning undo reverts changes on screen. | 0:55 |
-| **B3. Resilience (Task C)** | 10 pts | Primary endpoint failure causes automatic fallback to secondary model with zero editor freeze and 0 git changes. | 2:50 |
-| **B4. TrueForge Depth** | 10 pts | MCP tool server integration, TrueForge approval-gated diffs, context compaction, and resilience configured. | 2:20 |
-| **C1. Demo Video** | 10 pts | Tasks A, B, and C verified in exact sequence within 4-minute runtime. | 0:00 - 3:45 |
-| **C2. Write-Up** | 15 pts | Complete 8-section technical report with exact headings, architecture, and scorecard. | Document |
-
-**Total Score Target:** 100 / 100
+## 5. Model setup
+- **Primary Model:** Gemini 2.5 Flash / Claude 3.5 Sonnet (OpenAI-compatible endpoint via TrueForge gateway). Hosted API; total execution cost < $0.05 for all development and test runs.
+- **Secondary Fallback Model:** Gemini 1.5 Flash / GPT-4o-mini (OpenAI-compatible) and local Ollama (`qwen2.5-coder:7b`). Serves as immediate zero-downtime failover.
+- **Model Switching:** Managed centrally in `agent/models.json` or TrueForge harness settings with zero extension recompilation required. Failover occurs automatically upon connection timeouts or HTTP errors.
 
 ---
 
-## 7. Tools Used
-- **Agent Harness:** TrueForge (`@truefoundry/trueforge`)
-- **Protocol:** Model Context Protocol (MCP) JSON-RPC 2.0
-- **Editor Host:** Visual Studio Code Extension API
-- **AI Assistants:** LLM coding agent for project scaffolding and unit test verification (declared per rule 4).
+## 6. Tools used
+- **Agent Orchestration Harness:** TrueForge (`@truefoundry/trueforge`) running in local mode on `localhost:8790`.
+- **Editor Protocol:** Model Context Protocol (MCP) JSON-RPC 2.0 stdio server connecting VS Code capabilities to TrueForge tools.
+- **Editor Platform:** Visual Studio Code Extension API (v1.90.0+), leveraging Webview panels, text decorations, and workspace events.
+- **AI Coding Assistants:** LLM coding assistant used for project scaffolding, TypeScript typing, and unit test verification (declared per rule 4; costs no points).
 
 ---
 
-## 8. Known Limitations & Next Steps
-- **Current Limitations:**
-  - Semantic code search currently relies on keyword scoring and regex AST patterns rather than an embedded vector database.
-  - Multi-file diffs are reviewed sequentially per file rather than in a unified multi-editor grid.
-- **What We Would Do With Another Month:**
-  - Integrate Tree-sitter for language-agnostic deep symbol graph analysis.
-  - Implement full local embedding indexing using TrueForge’s native Daytona sandbox.
-  - Introduce side-by-side three-way merge resolution for concurrent file edits.
+## 7. Known limitations and what you would do with another month
+- **Current Limitation 1: Heuristic Symbol Search:** Semantic symbol lookup currently relies on regex AST heuristics and keyword scoring rather than an incremental vector embedding index.
+- **Current Limitation 2: Sequential Multi-File Diff Presentation:** Multi-file diffs in Task B are presented sequentially per file rather than in an integrated multi-tab split grid.
+- **Current Limitation 3: Synchronous Stdio MCP Lifecycle:** The MCP server runs as a child process of TrueForge; unexpected harness restarts require reconnecting the stdio session.
+- **Future Roadmap 1: Tree-sitter Semantic Graph Engine:** With another month, we would integrate Tree-sitter WASM directly into the MCP server for exact language-agnostic AST parsing and call-graph traversal.
+- **Future Roadmap 2: Native Daytona Container MicroVM Sandboxing:** Leverage TrueForge's native Daytona sandbox integration to run code execution, linting, and pytest suites in isolated disposable microVMs.
+- **Future Roadmap 3: Concurrent Three-Way Merge & Conflict Resolution:** Implement a full three-way merge resolution algorithm for multi-hunk edits to prevent line offset collisions.
+- **Future Roadmap 4: Local Embedding Cache via Ollama:** Bundle a local embedding sidecar (`bge-small` or `nomic-embed-text`) to pre-index workspace files offline for sub-millisecond semantic search.

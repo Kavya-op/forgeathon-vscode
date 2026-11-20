@@ -1,0 +1,6 @@
+{
+  "terminal.integrated.env.windows": {
+    "Path": "C:\\Python315;C:\\Python315\\Scripts;${env:Path}"
+  },
+  "python.defaultInterpreterPath": "C:\\Python315\\python.exe"
+}

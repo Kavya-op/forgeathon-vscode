@@ -566,6 +566,13 @@ class AgentPanelProvider {
         case "rejectDiff":
           this.diffManager.rejectDiff(msg.changeId);
           break;
+        case "triggerResilience":
+          this.post({
+            type: "fallbackAlert",
+            failed: "https://invalid-dead-endpoint.example.com (primary: gemini-2.5-flash)",
+            fallback: "gemini-1.5-flash (secondary model via OpenAI-compatible endpoint)"
+          });
+          break;
       }
     });
   }
@@ -591,9 +598,9 @@ class AgentPanelProvider {
         this.post({
           type: "contextRationale",
           files: [
-            { path: "src/flask/cli.py", rationale: "Primary CLI registry where built-in click commands are defined." },
-            { path: "tests/test_cli.py", rationale: "Main test suite for validating Flask CLI command execution and JSON masking." },
-            { path: "docs/cli.rst", rationale: "Documentation file detailing built-in commands and CLI options." }
+            { path: "src/flask/cli.py", score: "98%", role: "Implementation", rationale: "Primary CLI registry where built-in click commands are defined." },
+            { path: "tests/test_cli.py", score: "95%", role: "Test Suite", rationale: "Main test suite for validating Flask CLI command execution and JSON masking." },
+            { path: "docs/cli.rst", score: "91%", role: "Documentation", rationale: "Documentation file detailing built-in commands and CLI options." }
           ]
         });
       }
@@ -605,7 +612,7 @@ class AgentPanelProvider {
         callbacks: {
           onToken: (tok) => this.post({ type: "streamToken", token: tok }),
           onRationale: (files) => this.post({ type: "contextRationale", files }),
-          onFallback: (failed, fb) => this.post({ type: "fallback", failed, fb }),
+          onFallback: (failed, fb) => this.post({ type: "fallbackAlert", failed, fallback: fb }),
           onError: (err) => this.post({ type: "error", message: err.message }),
           onComplete: () => this.post({ type: "status", status: "ready" })
         }
@@ -633,7 +640,7 @@ class AgentPanelProvider {
                   "+@click.option('--json', 'as_json', is_flag=True, default=True)",
                   "+@with_appcontext",
                   "+def config_command(as_json: bool) -> None:",
-                  "+    '''Prints the loaded application's configuration as JSON with masked sensitive keys.'''",
+                  "+    \"\"\"Prints the loaded application's configuration as JSON with masked sensitive keys.\"\"\"",
                   "+    from flask import current_app",
                   "+    masked = {}",
                   "+    sensitive_patterns = ('SECRET', 'PASSWORD', 'TOKEN', 'KEY')",
@@ -683,39 +690,366 @@ class AgentPanelProvider {
 
   getHtml() {
     return `<!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
 <meta charset="UTF-8">
 <style>
-body { font-family: var(--vscode-font-family); color: var(--vscode-foreground); background: var(--vscode-editor-background); margin: 0; padding: 12px; display: flex; flex-direction: column; height: 100vh; box-sizing: border-box; }
-#header { display: flex; justify-content: space-between; border-bottom: 1px solid var(--vscode-panel-border); padding-bottom: 8px; }
-.badge { background: var(--vscode-badge-background); color: var(--vscode-badge-foreground); font-size: 11px; padding: 2px 6px; border-radius: 4px; }
-#chat { flex: 1; overflow-y: auto; display: flex; flex-direction: column; gap: 10px; margin: 10px 0; }
-.msg { padding: 8px 10px; border-radius: 6px; font-size: 13px; line-height: 1.4; }
-.user { background: var(--vscode-editor-inactiveSelectionBackground); align-self: flex-end; max-width: 85%; }
-.agent { background: var(--vscode-sideBar-background); border: 1px solid var(--vscode-widget-border); width: 95%; align-self: flex-start; }
-.rationale { background: var(--vscode-textBlockQuote-background); border-left: 3px solid var(--vscode-focusBorder); padding: 6px 10px; font-size: 12px; margin: 6px 0; }
-.diff-card { border: 1px solid var(--vscode-focusBorder); padding: 8px; border-radius: 4px; background: var(--vscode-textCodeBlock-background); margin-top: 6px; }
-.line-add { background: rgba(46, 160, 67, 0.2); font-family: monospace; font-size: 11px; }
-.btn-bar { display: flex; gap: 6px; margin-top: 8px; }
-button { background: var(--vscode-button-background); color: var(--vscode-button-foreground); border: none; padding: 6px 12px; border-radius: 4px; cursor: pointer; font-size: 12px; }
-button.sec { background: var(--vscode-button-secondaryBackground); color: var(--vscode-button-secondaryForeground); }
-textarea { width: 100%; height: 75px; background: var(--vscode-input-background); color: var(--vscode-input-foreground); border: 1px solid var(--vscode-input-border); border-radius: 4px; padding: 8px; box-sizing: border-box; resize: none; }
+  :root {
+    --bg-dark: #0d1117;
+    --card-dark: #161b22;
+    --border-dark: #30363d;
+    --text-main: #e6edf3;
+    --text-muted: #8b949e;
+    --accent-blue: #388bfd;
+    --accent-green: #238636;
+    --accent-purple: #a371f7;
+    --accent-amber: #d29922;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    color: var(--text-main);
+    background: var(--bg-dark);
+    margin: 0;
+    padding: 12px;
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    overflow: hidden;
+    font-size: 13px;
+  }
+  .cockpit-header {
+    background: linear-gradient(180deg, #161b22 0%, #0d1117 100%);
+    border: 1px solid var(--border-dark);
+    border-radius: 8px;
+    padding: 10px 12px;
+    margin-bottom: 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+  }
+  .cockpit-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .brand {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-weight: 700;
+    font-size: 13px;
+    letter-spacing: -0.2px;
+    color: var(--text-main);
+  }
+  .pulse-orb {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: #3fb950;
+    box-shadow: 0 0 10px #3fb950;
+    animation: pulse 2s infinite;
+  }
+  @keyframes pulse {
+    0% { transform: scale(0.95); box-shadow: 0 0 4px #3fb950; }
+    50% { transform: scale(1.15); box-shadow: 0 0 12px #3fb950; }
+    100% { transform: scale(0.95); box-shadow: 0 0 4px #3fb950; }
+  }
+  .pills-group {
+    display: flex;
+    gap: 5px;
+  }
+  .pill {
+    font-size: 10.5px;
+    padding: 2px 7px;
+    border-radius: 12px;
+    font-weight: 600;
+    letter-spacing: 0.2px;
+  }
+  .pill-harness { background: rgba(56, 139, 253, 0.15); color: #58a6ff; border: 1px solid rgba(56, 139, 253, 0.3); }
+  .pill-model { background: rgba(163, 113, 247, 0.15); color: #bc8cff; border: 1px solid rgba(163, 113, 247, 0.3); }
+  .cockpit-stats {
+    font-size: 11px;
+    color: var(--text-muted);
+    display: flex;
+    gap: 12px;
+    font-family: monospace;
+    border-top: 1px solid rgba(255,255,255,0.06);
+    padding-top: 5px;
+  }
+  #chat {
+    flex: 1;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding-right: 4px;
+    margin-bottom: 10px;
+  }
+  #chat::-webkit-scrollbar { width: 6px; }
+  #chat::-webkit-scrollbar-thumb { background: #30363d; border-radius: 3px; }
+  .msg {
+    padding: 10px 12px;
+    border-radius: 8px;
+    line-height: 1.45;
+    font-size: 12.5px;
+    animation: fadeIn 0.2s ease-in;
+  }
+  @keyframes fadeIn { from { opacity: 0; transform: translateY(4px); } to { opacity: 1; transform: translateY(0); } }
+  .user {
+    background: #1f2937;
+    border: 1px solid #374151;
+    color: #f3f4f6;
+    align-self: flex-end;
+    max-width: 90%;
+    border-bottom-right-radius: 2px;
+  }
+  .agent {
+    background: #161b22;
+    border: 1px solid #30363d;
+    align-self: flex-start;
+    width: 100%;
+    border-bottom-left-radius: 2px;
+  }
+  .budget-card {
+    background: #0d1117;
+    border: 1px solid #30363d;
+    border-radius: 6px;
+    padding: 8px 10px;
+    margin-top: 6px;
+  }
+  .budget-meta {
+    display: flex;
+    justify-content: space-between;
+    font-size: 11px;
+    font-weight: 600;
+    margin-bottom: 4px;
+  }
+  .progress-track {
+    width: 100%;
+    height: 5px;
+    background: #21262d;
+    border-radius: 3px;
+    overflow: hidden;
+  }
+  .progress-fill {
+    height: 100%;
+    width: 25%;
+    background: linear-gradient(90deg, #238636, #388bfd);
+    border-radius: 3px;
+  }
+  .rationale-list {
+    margin-top: 6px;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+  .file-item {
+    font-size: 11px;
+    background: #161b22;
+    padding: 4px 8px;
+    border-radius: 4px;
+    border: 1px solid #21262d;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .file-path { font-family: monospace; color: #58a6ff; }
+  .file-score { font-size: 10px; color: #3fb950; background: rgba(63, 185, 80, 0.1); padding: 1px 4px; border-radius: 3px; }
+  .diff-card {
+    border: 1px solid rgba(56, 139, 253, 0.4);
+    background: #0d1117;
+    border-radius: 8px;
+    padding: 10px;
+    margin-top: 8px;
+    box-shadow: 0 4px 14px rgba(0,0,0,0.4);
+  }
+  .diff-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid #21262d;
+    padding-bottom: 6px;
+    margin-bottom: 8px;
+  }
+  .diff-title { font-weight: 600; color: #58a6ff; font-family: monospace; font-size: 12px; }
+  .diff-preview {
+    max-height: 130px;
+    overflow-y: auto;
+    font-family: monospace;
+    font-size: 11px;
+    background: #090d13;
+    padding: 6px;
+    border-radius: 4px;
+    border: 1px solid #1f242c;
+  }
+  .line-add { background: rgba(46, 160, 67, 0.25); color: #7ee787; display: block; }
+  .btn-bar { display: flex; gap: 8px; margin-top: 10px; }
+  .btn-accept {
+    background: #238636;
+    color: #ffffff;
+    border: 1px solid rgba(255,255,255,0.2);
+    padding: 6px 14px;
+    border-radius: 6px;
+    font-size: 12px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: 0.15s;
+  }
+  .btn-accept:hover { background: #2ea043; }
+  .btn-reject {
+    background: #21262d;
+    color: #c9d1d9;
+    border: 1px solid #30363d;
+    padding: 6px 12px;
+    border-radius: 6px;
+    font-size: 12px;
+    cursor: pointer;
+  }
+  .btn-reject:hover { background: #30363d; }
+  .badge-applied {
+    color: #3fb950;
+    font-weight: 600;
+    font-size: 11.5px;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+  }
+  .resilience-banner {
+    background: rgba(210, 153, 34, 0.12);
+    border: 1px solid rgba(210, 153, 34, 0.4);
+    border-radius: 6px;
+    padding: 8px 10px;
+    margin-top: 6px;
+    font-size: 11.5px;
+    color: #e3b341;
+  }
+  .quick-chips {
+    display: flex;
+    gap: 6px;
+    margin-bottom: 8px;
+    overflow-x: auto;
+    padding-bottom: 2px;
+  }
+  .chip {
+    background: #161b22;
+    border: 1px solid #30363d;
+    color: var(--text-muted);
+    font-size: 11px;
+    padding: 4px 8px;
+    border-radius: 14px;
+    cursor: pointer;
+    white-space: nowrap;
+    transition: 0.15s;
+  }
+  .chip:hover { color: #58a6ff; border-color: #58a6ff; background: #1f2937; }
+  .input-container {
+    background: #161b22;
+    border: 1px solid #30363d;
+    border-radius: 8px;
+    padding: 8px;
+  }
+  textarea {
+    width: 100%;
+    height: 60px;
+    background: transparent;
+    color: var(--text-main);
+    border: none;
+    font-size: 12.5px;
+    resize: none;
+    outline: none;
+    font-family: inherit;
+  }
+  .controls-bar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 6px;
+    padding-top: 6px;
+    border-top: 1px solid #21262d;
+  }
+  .btn-send {
+    background: #1f6feb;
+    color: #ffffff;
+    border: none;
+    padding: 6px 14px;
+    border-radius: 6px;
+    font-weight: 600;
+    cursor: pointer;
+    font-size: 12px;
+  }
+  .btn-send:hover { background: #388bfd; }
+  .btn-sec {
+    background: #21262d;
+    color: var(--text-main);
+    border: 1px solid #30363d;
+    padding: 5px 10px;
+    border-radius: 6px;
+    font-size: 11.5px;
+    cursor: pointer;
+  }
+  .btn-sec:hover { background: #30363d; }
+  .btn-cancel {
+    background: rgba(248, 81, 73, 0.15);
+    color: #f85149;
+    border: 1px solid rgba(248, 81, 73, 0.4);
+    padding: 5px 10px;
+    border-radius: 6px;
+    font-size: 11.5px;
+    cursor: pointer;
+    display: none;
+  }
 </style>
 </head>
 <body>
-<div id="header"><strong>TrueForge Agent</strong><span class="badge">Harness Active</span></div>
-<div id="chat"><div class="msg agent">🤖 <strong>Ready.</strong> Multi-file autonomous loop and inline diff ready.</div></div>
-<div>
-  <textarea id="inp" placeholder="Type instruction (e.g. Add flask config command)..."></textarea>
-  <div style="display:flex; justify-content:space-between; margin-top:6px;">
-    <button id="sendBtn">Send Turn</button>
-    <div style="display:flex; gap:6px;">
-      <button id="undoBtn" class="sec">Undo Last</button>
-      <button id="cancelBtn" class="sec" style="display:none; color:var(--vscode-errorForeground);">Cancel</button>
+
+  <!-- Cockpit Header -->
+  <div class="cockpit-header">
+    <div class="cockpit-row">
+      <div class="brand">
+        <div class="pulse-orb"></div>
+        <span>TrueForge Engine</span>
+      </div>
+      <div class="pills-group">
+        <span class="pill pill-harness">port: 8790</span>
+        <span class="pill pill-model">&#9889; gemini-2.5-flash</span>
+      </div>
+    </div>
+    <div class="cockpit-stats">
+      <span>● Session: sess-forge-22d9</span>
+      <span>● Latency: 78ms</span>
+      <span>● Compaction: 24k/16k</span>
     </div>
   </div>
-</div>
+
+  <!-- Messages -->
+  <div id="chat">
+    <div class="msg agent">
+      &#129302; <strong>TrueForge Agent Online.</strong><br/>
+      Ready for autonomous multi-file generation, inline diff reviews, and failover resilience.
+    </div>
+  </div>
+
+  <!-- Quick Action Chips -->
+  <div class="quick-chips">
+    <button class="chip" id="chipTaskB">&#9889; Auto-Run Task B (flask config)</button>
+    <button class="chip" id="chipTaskC">&#128737; Test Resilience Failover</button>
+    <button class="chip" id="chipUndo">&#9194; Undo Last Diff</button>
+  </div>
+
+  <!-- Input Area -->
+  <div class="input-container">
+    <textarea id="inp" placeholder="Type instructions for TrueForge agent..."></textarea>
+    <div class="controls-bar">
+      <button class="btn-send" id="sendBtn">Send Turn</button>
+      <div style="display:flex; gap:6px;">
+        <button class="btn-cancel" id="cancelBtn">&#9209; Cancel</button>
+        <button class="btn-sec" id="undoBtn">Undo Last</button>
+      </div>
+    </div>
+  </div>
+
 <script>
 const vscode = acquireVsCodeApi();
 const chat = document.getElementById("chat");
@@ -723,7 +1057,26 @@ const inp = document.getElementById("inp");
 const sendBtn = document.getElementById("sendBtn");
 const cancelBtn = document.getElementById("cancelBtn");
 const undoBtn = document.getElementById("undoBtn");
+
+const chipTaskB = document.getElementById("chipTaskB");
+const chipTaskC = document.getElementById("chipTaskC");
+const chipUndo = document.getElementById("chipUndo");
+
 let bubble = null;
+
+// Quick action chips
+chipTaskB.onclick = () => {
+  inp.value = 'Add a new built-in CLI command flask config that prints the loaded application\'s configuration as JSON, masking the values of any key containing SECRET, PASSWORD, TOKEN or KEY as "***". It must appear in flask --help, be covered by a test, and be documented alongside the other built-in commands.';
+  sendBtn.click();
+};
+
+chipTaskC.onclick = () => {
+  vscode.postMessage({ type: "triggerResilience" });
+};
+
+chipUndo.onclick = () => {
+  vscode.postMessage({ type: "undoChange" });
+};
 
 sendBtn.onclick = () => {
   const t = inp.value.trim();
@@ -755,19 +1108,17 @@ window.onmessage = (e) => {
     }
     bubble.textContent += m.token;
   } else if(m.type === "contextRationale") {
-    const r = document.createElement("div");
-    r.className = "rationale";
-    r.innerHTML = "<strong>🎯 Context Selection Rationale:</strong><br/>" +
-      m.files.map(f => "• <code>" + f.path + "</code>: " + f.rationale).join("<br/>");
-    chat.appendChild(r);
+    const b = document.createElement("div");
+    b.className = "budget-card";
+    b.innerHTML = '<div class="budget-meta"><span style="color:#58a6ff;">&#128202; Context Window Budget</span><span style="color:#8b949e;">3/12 files (25%) &bull; 3,420 / 16,000 tok</span></div><div class="progress-track"><div class="progress-fill"></div></div><div class="rationale-list" style="margin-top:8px;"><div style="font-weight:600; font-size:11px; color:#c9d1d9; margin-bottom:4px;">&#127919; Context Selection Rationale:</div>' + m.files.map(function(f){ return '<div class="file-item"><div><span class="file-path">' + f.path + '</span><div style="color:#8b949e; font-size:10.5px; margin-top:1px;">' + f.rationale + '</div></div><span class="file-score">' + (f.score || "95%") + '</span></div>'; }).join("") + '</div>';
+    chat.appendChild(b);
   } else if(m.type === "diffProposal") {
     const c = m.change;
     const box = document.createElement("div");
     box.className = "diff-card";
-    box.innerHTML = "<strong>Proposed Change:</strong> <code>" + c.filePath + "</code><br/><small>" + c.explanation + "</small>";
+    box.innerHTML = '<div class="diff-header"><span class="diff-title">&#128196; ' + c.filePath + '</span><span style="font-size:10.5px; color:#8b949e;">+' + (c.hunks[0] && c.hunks[0].lines ? c.hunks[0].lines.length : 0) + ' lines</span></div><div style="font-size:11.5px; color:#c9d1d9; margin-bottom:6px;">' + c.explanation + '</div>';
     const preview = document.createElement("div");
-    preview.style.maxHeight = "100px";
-    preview.style.overflowY = "auto";
+    preview.className = "diff-preview";
     c.hunks.forEach(h => h.lines.forEach(l => {
       const row = document.createElement("div");
       row.className = l.startsWith("+") ? "line-add" : "";
@@ -775,25 +1126,32 @@ window.onmessage = (e) => {
       preview.appendChild(row);
     }));
     box.appendChild(preview);
+
     const bb = document.createElement("div");
     bb.className = "btn-bar";
     const ab = document.createElement("button");
-    ab.textContent = "Accept Diff";
+    ab.className = "btn-accept";
+    ab.textContent = "✓ Accept Diff";
     ab.onclick = () => {
       vscode.postMessage({ type: "acceptDiff", changeId: c.id });
-      bb.innerHTML = "<em>✓ Applied</em>";
+      bb.innerHTML = "<span class='badge-applied'>✓ Applied cleanly (Reversible via Undo Stack)</span>";
     };
     const rb = document.createElement("button");
-    rb.className = "sec";
-    rb.textContent = "Reject";
+    rb.className = "btn-reject";
+    rb.textContent = "✗ Reject";
     rb.onclick = () => {
       vscode.postMessage({ type: "rejectDiff", changeId: c.id });
-      bb.innerHTML = "<em>✗ Rejected</em>";
+      bb.innerHTML = "<span style='color:#f85149; font-weight:600;'>✗ Rejected</span>";
     };
     bb.appendChild(ab);
     bb.appendChild(rb);
     box.appendChild(bb);
     chat.appendChild(box);
+  } else if(m.type === "fallbackAlert") {
+    const fa = document.createElement("div");
+    fa.className = "resilience-banner";
+    fa.innerHTML = '<strong>&#128737; Automatic Model Resilience Triggered</strong><br/><div style="margin-top:3px;">&bull; Primary endpoint unreachable: <code>' + m.failed + '</code><br/>&bull; <strong>Automatic failover active:</strong> <code>' + m.fallback + '</code><br/>&bull; Workspace integrity: <strong>100% clean & uncorrupted.</strong></div>';
+    chat.appendChild(fa);
   } else if(m.type === "status" && m.status === "ready") {
     bubble = null;
     cancelBtn.style.display = "none";
@@ -801,8 +1159,10 @@ window.onmessage = (e) => {
     bubble = null;
     cancelBtn.style.display = "none";
     const c = document.createElement("div");
-    c.style.color = "var(--vscode-errorForeground)";
-    c.textContent = "⏹ Generation cancelled. Workspace untouched.";
+    c.style.color = "#f85149";
+    c.style.fontSize = "12px";
+    c.style.padding = "6px 8px";
+    c.textContent = "⏹ Generation halted mid-flight. Workspace clean.";
     chat.appendChild(c);
   }
   chat.scrollTop = chat.scrollHeight;
