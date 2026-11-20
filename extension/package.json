@@ -9,6 +9,9 @@
   },
   "categories": ["Programming Languages", "Machine Learning"],
   "main": "./dist/extension.js",
+  "activationEvents": [
+    "onStartupFinished"
+  ],
   "contributes": {
     "commands": [
       {

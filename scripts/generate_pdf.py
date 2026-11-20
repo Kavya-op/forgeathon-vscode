@@ -187,10 +187,10 @@ def generate_3page_pdf_no_scorecard(output_path):
     card_h = 58.0
     
     members = [
-        ("Kavya Joshi", "Lead Architecture & Extension Host", "College / Institution: [Your College]", "GitHub: github.com/KavyaJoshi | kavya@example.com"),
-        ("Team Member 2", "MCP Protocol & Tool Server Engineering", "College / Institution: [Institution Name]", "GitHub: @member2 | member2@example.com"),
-        ("Team Member 3", "Context Assembly & Budgeted Retrieval", "College / Institution: [Institution Name]", "GitHub: @member3 | member3@example.com"),
-        ("Team Member 4", "Diff Safety, Pytest & Resilience Testing", "College / Institution: [Institution Name]", "GitHub: @member4 | member4@example.com")
+        ("Kavya Joshi (Leader)", "Lead Architecture & Extension Host", "GitHub: github.com/Kavya-op/forgeathon-vscode", "Email: kavyajoshi.tech@gmail.com"),
+        ("Jagrati Bhattacharya", "MCP Protocol & Tool Server Engineering", "Subsystem: MCP Protocol & Stdio Bridge", "Email: jagratibhattacharya29@gmail.com"),
+        ("Khushi Singhal", "Context Assembly & Budgeted Retrieval", "Subsystem: Context Budgeting & Heuristics", "Email: khushisinghal2008@gmail.com"),
+        ("Ishita Khandelwal", "Diff Safety, Pytest & Resilience Testing", "Subsystem: Hunk Diff Review & Pytest Suite", "Email: ishitak1528@gmail.com")
     ]
 
     for i, (name, role, inst, contact) in enumerate(members):
@@ -202,7 +202,7 @@ def generate_3page_pdf_no_scorecard(output_path):
         pdf.draw_rect(x, y, card_w, card_h, fill_r=0.97, fill_g=0.98, fill_b=0.99, stroke=True, stroke_r=0.84, stroke_g=0.87, stroke_b=0.91)
         pdf.draw_text(name, x + 8.0, y + card_h - 14.0, font="F2", size=9.8, r=0.10, g=0.14, b=0.18)
         pdf.draw_text(role, x + 8.0, y + card_h - 26.0, font="F2", size=8.2, r=0.08, g=0.45, b=0.82)
-        pdf.draw_text(inst, x + 8.0, y + card_h - 38.0, font="F1", size=8.0, r=0.35, g=0.38, b=0.42)
+        pdf.draw_text(inst, x + 8.0, y + card_h - 38.0, font="F1", size=7.6, r=0.35, g=0.38, b=0.42)
         pdf.draw_text(contact, x + 8.0, y + card_h - 49.0, font="F1", size=7.8, r=0.45, g=0.48, b=0.52)
 
     pdf.cursor_y -= (2 * card_h + 22.0)

@@ -6,8 +6,8 @@
       "type": "extensionHost",
       "request": "launch",
       "args": [
-        "${workspaceFolder}/flask-real",
-        "--extensionDevelopmentPath=${workspaceFolder}/extension"
+        "--extensionDevelopmentPath=${workspaceFolder}/extension",
+        "${workspaceFolder}\\flask-real"
       ],
       "env": {
         "Path": "C:\\Python315;C:\\Python315\\Scripts;${env:Path}"

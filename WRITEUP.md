@@ -1,10 +1,10 @@
 # TrueForge Coding Agent: System Architecture & Competition Write-Up
 
 ## 1. Team
-- **Kavya Joshi (Team Lead):** Lead Architecture & Extension Host (`github.com/KavyaJoshi` | `kavya@example.com`)
-- **Team Member 2:** MCP Protocol & Tool Server Engineering (`@member2` | `member2@example.com`)
-- **Team Member 3:** Context Assembly & Budgeted Retrieval (`@member3` | `member3@example.com`)
-- **Team Member 4:** Diff Safety, Pytest & Resilience Testing (`@member4` | `member4@example.com`)
+- **Kavya Joshi (Team Leader):** Lead Architecture & Extension Host (`kavyajoshi.tech@gmail.com` | `https://github.com/Kavya-op/forgeathon-vscode`)
+- **Jagrati Bhattacharya:** MCP Protocol & Tool Server Engineering (`jagratibhattacharya29@gmail.com`)
+- **Khushi Singhal:** Context Assembly & Budgeted Retrieval (`khushisinghal2008@gmail.com`)
+- **Ishita Khandelwal:** Diff Safety, Pytest & Resilience Testing (`ishitak1528@gmail.com`)
 
 ---
 
